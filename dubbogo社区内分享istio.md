@@ -50,6 +50,10 @@ istiod端口
 
 Kubelet --> istio-cni 
 
+NetworkAttachmentDefinition
+kubectl get network-attachment-definitions
+目的是让Multus CNI链调用istio-cni插件
+
 ```shell
 uname=envoy
 uid=1337
@@ -105,18 +109,6 @@ COMMIT
 
 ### 细节原理和配置
 
-#### envoy概念
-
-`Downstream Upstream`
-
-`xds and route/listener/cluster/endpoint`
-
-<img src="https://github.com/pantianying/page/blob/main/envoy%E6%A6%82%E5%BF%B5.jpg?raw=true" alt="envoy模块1" style="zoom:50%;" />
-
-
-
-配置文件解读 todo
-
 #### istio概念 
 
  `virtualService/DestinationRule/ServiceEntry/Gateway/sidecar`
@@ -145,7 +137,7 @@ spec:
   - route:
     - destination:
         host: reviews # interpreted as reviews.foo.svc.cluster.local
-        subset: v1
+        subset: 2
 
 ```
 
@@ -217,11 +209,24 @@ spec:
     - "istio-system/*"
 ```
 
-#### NetworkAttachmentDefinition
+#### envoy概念
 
-kubectl get network-attachment-definitions
+`Downstream Upstream`
 
-目的是让Multus CNI链调用istio-cni插件
+`xds and route/listener/cluster/endpoint`
+
+<img src="https://github.com/pantianying/page/blob/main/envoy%E6%A6%82%E5%BF%B5.jpg?raw=true" alt="envoy模块1" style="zoom:50%;" />
+
+
+
+配置文件解读 todo
+
+
+#### dubbo协议
+
+https://github.com/aeraki-framework/aeraki
+
+
 
 
 
@@ -237,3 +242,4 @@ kubectl get network-attachment-definitions
 <img src="https://github.com/pantianying/page/blob/main/IRA.png?raw=true" alt="IRA" style="zoom:50%;" />
 <img src="https://github.com/pantianying/page/blob/main/mesh%E5%86%85%E5%A4%96%E8%B0%83%E7%94%A8.png?raw=true" alt="内外调用" style="zoom:50%;" />
 
+#### log metric trace方案，多租户等等
